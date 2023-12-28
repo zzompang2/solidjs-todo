@@ -8,8 +8,15 @@ const style: Record<string, JSX.CSSProperties> = {
   sectionList: {
     display: "flex",
     flex: 1,
-    "margin-left": `${SIZE.sidePanelW}px`,
-    overflow: "scroll",
+    height: "100%",
+    "overflow-x": "scroll",
+  },
+  button: {
+    height: "100%",
+    width: `${SIZE.sectionW / 2}px`,
+    padding: "0 20px",
+    margin: "0 20px",
+    "font-size": "20px",
   },
 };
 
@@ -26,7 +33,9 @@ export default function SectionList() {
           />
         )}
       </For>
-      <button onclick={() => STORE.sectionList.add()}>+section</button>
+      <button style={style.button} onclick={() => STORE.sectionList.add()}>
+        +section
+      </button>
     </div>
   );
 }

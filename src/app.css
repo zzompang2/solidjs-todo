@@ -22,3 +22,60 @@ main {
   flex-direction: column;
   width: 100%;
 }
+
+input {
+  background-color: unset;
+  border: none;
+  color: #ffffff;
+}
+
+button {
+  background-color: unset;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #ffffff10;
+}
+
+div.todo > button {
+  display: none;
+}
+
+div.todo:hover > button {
+  display: block;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+label:has(> input[type="checkbox"]) {
+  width: 30px;
+  height: 30px;
+  background-color: none;
+  border: 3px solid #6aa7c2;
+  border-radius: 10px;
+  margin-right: 8px;
+}
+
+label:has(> input[type="checkbox"]:checked) {
+  background-color: #6aa7c2;
+}
+
+::-webkit-scrollbar {
+  background-color: #00000000;
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ffffff00;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+}

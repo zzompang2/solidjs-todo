@@ -9,15 +9,34 @@ import AddButton from "./AddButton";
 
 const style: Record<string, JSX.CSSProperties> = {
   section: {
+    display: "flex",
+    "flex-direction": "column",
     "min-width": `${SIZE.sectionW}px`,
-    "background-color": COLOR.gray,
-    margin: "20px 20px 0 20px",
-    padding: "20px",
+    height: "100%",
+    "margin-left": "20px",
+    "padding-top": "20px",
     "border-radius": "10px 10px 0 0",
+    "background-color": COLOR.gray,
   },
   header: {
     display: "flex",
+    "align-items": "center",
     height: `${SIZE.sectionTitleH}px`,
+    padding: "0 20px",
+  },
+  title: {
+    "font-size": "20px",
+    flex: 1,
+  },
+  button: {
+    width: "40px",
+    height: "40px",
+    "border-radius": "10px",
+  },
+  scroll: {
+    flex: 1,
+    "overflow-y": "scroll",
+    padding: "20px",
   },
 };
 
@@ -38,10 +57,12 @@ export default function Section(props: Props) {
     <div style={style.section}>
       <div style={style.header}>
         <input
+          style={style.title}
           value={props.section.name}
           onchange={(e) => handleChangeName(props.section.id, e.target)}
         />
         <button
+          style={style.button}
           onclick={() => {
             STORE.todoList.deleteAll(props.section.id);
             STORE.sectionList.delete(props.section.id);
@@ -50,10 +71,12 @@ export default function Section(props: Props) {
           X
         </button>
       </div>
-      <For each={props.todoList}>
-        {(todo) => <Item todo={todo} type="edit" />}
-      </For>
-      <AddButton sectionId={props.section.id} />
+      <div style={style.scroll}>
+        <For each={props.todoList}>
+          {(todo) => <Item todo={todo} type="edit" />}
+        </For>
+        <AddButton sectionId={props.section.id} />
+      </div>
     </div>
   );
 }

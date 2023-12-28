@@ -21,6 +21,14 @@ const style: Record<string, JSX.CSSProperties> = {
   viewType: {
     "background-color": COLOR.gray,
   },
+  name: {
+    flex: 1,
+    "font-size": "16px",
+  },
+  button: {
+    width: "40px",
+    height: "40px",
+  },
 };
 
 interface Props {
@@ -40,29 +48,33 @@ export default function Item(props: Props) {
     <Show
       when={props.type == "edit"}
       fallback={
-        <div style={{ ...style.item, ...style.viewType }}>
+        <div style={{ ...style.name, ...style.item, ...style.viewType }}>
           {props.todo.name}
         </div>
       }
     >
-      <label>
-        <div style={{ ...style.item, ...style.editType }}>
+      <div class="todo" style={{ ...style.item, ...style.editType }}>
+        <label>
           <input
             type="checkbox"
             checked={props.todo.done}
             onchange={(e) =>
               STORE.todoList.check(props.todo.id, e.target.checked)
             }
-          ></input>
-          <input
-            value={props.todo.name}
-            onchange={(e) => handleChangeName(props.todo.id, e.target)}
           />
-          <button onclick={() => STORE.todoList.delete(props.todo.id)}>
-            X
-          </button>
-        </div>
-      </label>
+        </label>
+        <input
+          style={style.name}
+          value={props.todo.name}
+          onchange={(e) => handleChangeName(props.todo.id, e.target)}
+        />
+        <button
+          style={style.button}
+          onclick={() => STORE.todoList.delete(props.todo.id)}
+        >
+          X
+        </button>
+      </div>
     </Show>
   );
 }

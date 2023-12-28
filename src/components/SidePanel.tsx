@@ -9,7 +9,6 @@ const style: Record<string, JSX.CSSProperties> = {
   panel: {
     display: "flex",
     "flex-direction": "column",
-    position: "fixed",
     width: `${SIZE.sidePanelW}px`,
     height: "100%",
     "background-color": COLOR.black,
