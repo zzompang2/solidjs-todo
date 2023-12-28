@@ -38,14 +38,14 @@ export default function SidePanel() {
       <div style={style.header}>To-do</div>
       <div style={style.container}>
         <For each={STORE.todoList.get().filter((todo) => !todo.done)}>
-          {(todo) => <Item todo={todo} />}
+          {(todo) => <Item todo={todo} type="view" />}
         </For>
       </div>
       <div style={style.divider}></div>
       <div style={style.header}>Done</div>
       <div style={style.container}>
         <For each={STORE.todoList.get().filter((todo) => todo.done)}>
-          {(todo) => <Item todo={todo} />}
+          {(todo) => <Item todo={todo} type="view" />}
         </For>
       </div>
     </div>

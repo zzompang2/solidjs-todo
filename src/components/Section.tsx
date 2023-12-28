@@ -13,7 +13,7 @@ const style: Record<string, JSX.CSSProperties> = {
     "background-color": COLOR.gray,
     margin: "20px 20px 0 20px",
     padding: "20px",
-    "border-radius": "10px",
+    "border-radius": "10px 10px 0 0",
   },
   header: {
     display: "flex",
@@ -50,7 +50,9 @@ export default function Section(props: Props) {
           X
         </button>
       </div>
-      <For each={props.todoList}>{(todo) => <Item todo={todo} />}</For>
+      <For each={props.todoList}>
+        {(todo) => <Item todo={todo} type="edit" />}
+      </For>
       <AddButton sectionId={props.section.id} />
     </div>
   );
