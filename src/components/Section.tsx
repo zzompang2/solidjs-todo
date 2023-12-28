@@ -1,36 +1,45 @@
 // @refresh reload
 import { JSX } from "solid-js/jsx-runtime";
+import { For } from "solid-js";
 import { SIZE } from "./Size";
 import { COLOR } from "./Theme";
-import { For } from "solid-js";
+import { STORE, SectionData, TodoData } from "./Store";
 import Item from "./Item";
-import { STORE } from "./Store";
 import AddButton from "./AddButton";
 
-const style_section: JSX.CSSProperties = {
-  "min-width": `${SIZE.sectionW}px`,
-  "background-color": COLOR.gray,
-  margin: "20px 20px 0 20px",
-  padding: "20px",
-  "border-radius": "10px",
+const style: Record<string, JSX.CSSProperties> = {
+  section: {
+    "min-width": `${SIZE.sectionW}px`,
+    "background-color": COLOR.gray,
+    margin: "20px 20px 0 20px",
+    padding: "20px",
+    "border-radius": "10px",
+  },
+  header: {
+    display: "flex",
+    height: `${SIZE.sectionTitleH}px`,
+  },
 };
 
-const style_header: JSX.CSSProperties = {
-  display: "flex",
-  height: `${SIZE.sectionTitleH}px`,
-};
+interface Props {
+  section: SectionData;
+  todoList: TodoData[];
+}
 
-export default function Section(props) {
+export default function Section(props: Props) {
+  const handleChangeName = (id: number, input: HTMLInputElement) => {
+    STORE.changeSectionName(id, input.value);
+    // if empty string, rewrite existing name
+    input.value = props.section.name;
+    input.blur();
+  };
+
   return (
-    <div style={style_section}>
-      <div style={style_header}>
+    <div style={style.section}>
+      <div style={style.header}>
         <input
-          value={props.section.title}
-          onchange={(e) => {
-            STORE.changeSectionName(props.section.id, e.target.value);
-            e.target.value = props.section.title;
-            e.target.blur();
-          }}
+          value={props.section.name}
+          onchange={(e) => handleChangeName(props.section.id, e.target)}
         />
         <button onclick={() => STORE.deleteSection(props.section.id)}>X</button>
       </div>

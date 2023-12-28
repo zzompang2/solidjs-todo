@@ -6,28 +6,32 @@ import SidePanel from "./components/SidePanel";
 import { SIZE } from "./components/Size";
 import { COLOR } from "./components/Theme";
 
-const style_header: JSX.CSSProperties = {
-  display: "flex",
-  position: "fixed",
-  "align-items": "center",
-  "justify-content": "center",
-  width: "100%",
-  height: `${SIZE.headerH}px`,
-  color: COLOR.white,
+const style: Record<string, JSX.CSSProperties> = {
+  main: {
+    "background-color": COLOR.black,
+  },
+  header: {
+    display: "flex",
+    position: "fixed",
+    "align-items": "center",
+    "justify-content": "center",
+    width: "100%",
+    height: `${SIZE.headerH}px`,
+    color: COLOR.white,
+  },
+  container: {
+    display: "flex",
+    "flex-direction": "row",
+    flex: 1,
+    "margin-top": `${SIZE.headerH}px`,
+  },
 };
 
 export default function App() {
   return (
-    <main style={{ "background-color": COLOR.black }}>
-      <div style={style_header}>Solid.js Todo</div>
-      <div
-        style={{
-          display: "flex",
-          "flex-direction": "row",
-          flex: 1,
-          "margin-top": `${SIZE.headerH}px`,
-        }}
-      >
+    <main style={style.main}>
+      <div style={style.header}>Solid.js Todo</div>
+      <div style={style.container}>
         <SidePanel />
         <SectionList />
       </div>

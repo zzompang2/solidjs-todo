@@ -1,6 +1,10 @@
+// @refresh reload
 import { STORE } from "./Store";
 
-// @refresh reload
-export default function AddButton(props) {
+interface Props {
+  sectionId: number;
+}
+
+export default function AddButton(props: Props) {
   return <button onclick={() => STORE.addTodo(props.sectionId)}>+</button>;
 }

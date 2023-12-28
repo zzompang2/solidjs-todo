@@ -1,22 +1,21 @@
 // @refresh reload
-import { SIZE } from "./Size";
-import { COLOR } from "./Theme";
-import Section from "./Section";
 import { For, JSX } from "solid-js";
+import { SIZE } from "./Size";
 import { STORE } from "./Store";
+import Section from "./Section";
 
-const style_sectionList: JSX.CSSProperties = {
-  display: "flex",
-  flex: 1,
-  "margin-left": `${SIZE.sidePanelW}px`,
-  overflow: "scroll",
+const style: Record<string, JSX.CSSProperties> = {
+  sectionList: {
+    display: "flex",
+    flex: 1,
+    "margin-left": `${SIZE.sidePanelW}px`,
+    overflow: "scroll",
+  },
 };
 
 export default function SectionList() {
-  let bodyRef;
-
   return (
-    <div style={style_sectionList} ref={bodyRef}>
+    <div style={style.sectionList}>
       <For each={STORE.sectionList}>
         {(section) => (
           <Section

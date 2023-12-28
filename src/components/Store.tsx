@@ -1,24 +1,33 @@
 import { createStore } from "solid-js/store";
 
-let todoId = 2;
-let sectionId = 2;
+let todoId = 1;
+let sectionId = 0;
+
+export interface TodoData {
+  id: number;
+  name: string;
+  section: number;
+  done: boolean;
+}
 
 const [todoList, setTodoList] = createStore([
-  { id: 0, work: "Excercies", section: 1, done: false },
-  { id: 1, work: "Sleep", section: 2, done: true },
-  { id: 2, work: "Cooking", section: 2, done: false },
+  { id: 0, name: "Welcome Solid-Todo.", section: 0, done: false } as TodoData,
+  { id: 1, name: "Have a good day!", section: 0, done: false },
 ]);
 
+export interface SectionData {
+  id: number;
+  name: string;
+}
+
 const [sectionList, setSectionList] = createStore([
-  { id: 0, title: "Work" },
-  { id: 1, title: "Hobby" },
-  { id: 2, title: "Home" },
+  { id: 0, name: "Work" } as SectionData,
 ]);
 
 const addTodo = (sectionId: number) => {
   setTodoList((list) => [
     ...list,
-    { id: ++todoId, work: "New", section: sectionId, done: false },
+    { id: ++todoId, name: "New", section: sectionId, done: false },
   ]);
 };
 
@@ -32,14 +41,11 @@ const deleteTodo = (id: number) => {
 
 const changeTodoName = (id: number, name: string) => {
   if (name.trim() === "") return;
-  setTodoList((todo) => todo.id === id, "work", name);
+  setTodoList((todo) => todo.id === id, "name", name);
 };
 
 const addSection = () => {
-  setSectionList((list) => [
-    ...list,
-    { id: ++sectionId, title: "New Section" },
-  ]);
+  setSectionList((list) => [...list, { id: ++sectionId, name: "New Section" }]);
 };
 
 const deleteSection = (id: number) => {
@@ -49,7 +55,7 @@ const deleteSection = (id: number) => {
 
 const changeSectionName = (id: number, name: string) => {
   if (name.trim() === "") return;
-  setSectionList((section) => section.id === id, "title", name);
+  setSectionList((section) => section.id === id, "name", name);
 };
 
 export const STORE = {
