@@ -6,5 +6,5 @@ interface Props {
 }
 
 export default function AddButton(props: Props) {
-  return <button onclick={() => STORE.addTodo(props.sectionId)}>+</button>;
+  return <button onclick={() => STORE.todoList.add(props.sectionId)}>+</button>;
 }

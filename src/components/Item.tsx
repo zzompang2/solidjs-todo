@@ -23,7 +23,7 @@ interface Props {
 
 export default function Item(props: Props) {
   const handleChangeName = (id: number, input: HTMLInputElement) => {
-    STORE.changeTodoName(id, input.value);
+    STORE.todoList.changeName(id, input.value);
     // if empty string, rewrite existing name
     input.value = props.todo.name;
     input.blur();
@@ -35,13 +35,15 @@ export default function Item(props: Props) {
         <input
           type="checkbox"
           checked={props.todo.done}
-          onchange={(e) => STORE.checkTodo(props.todo.id, e.target.checked)}
+          onchange={(e) =>
+            STORE.todoList.check(props.todo.id, e.target.checked)
+          }
         ></input>
         <input
           value={props.todo.name}
           onchange={(e) => handleChangeName(props.todo.id, e.target)}
         />
-        <button onclick={() => STORE.deleteTodo(props.todo.id)}>X</button>
+        <button onclick={() => STORE.todoList.delete(props.todo.id)}>X</button>
       </div>
     </label>
   );

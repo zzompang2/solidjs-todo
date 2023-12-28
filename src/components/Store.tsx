@@ -1,7 +1,4 @@
-import { createStore } from "solid-js/store";
-
-let todoId = 1;
-let sectionId = 0;
+import { SetStoreFunction, createStore } from "solid-js/store";
 
 export interface TodoData {
   id: number;
@@ -10,64 +7,95 @@ export interface TodoData {
   done: boolean;
 }
 
-const [todoList, setTodoList] = createStore([
-  { id: 0, name: "Welcome Solid-Todo.", section: 0, done: false } as TodoData,
-  { id: 1, name: "Have a good day!", section: 0, done: false },
-]);
+class TodoList {
+  #list: TodoData[];
+  #set: SetStoreFunction<TodoData[]>;
+  #id: number = 1;
+
+  constructor() {
+    [this.#list, this.#set] = createStore([
+      {
+        id: 0,
+        name: "Welcome Solid-Todo.",
+        section: 0,
+        done: false,
+      } as TodoData,
+      { id: 1, name: "Have a good day!", section: 0, done: false },
+    ]);
+  }
+
+  get() {
+    return this.#list;
+  }
+
+  add(sectionId: number) {
+    this.#set((list) => [
+      ...list,
+      {
+        id: ++this.#id,
+        name: `New Todo ${this.#id}`,
+        section: sectionId,
+        done: false,
+      },
+    ]);
+  }
+
+  check(id: number, checked: boolean) {
+    this.#set((todo) => todo.id === id, "done", checked);
+  }
+
+  delete(id: number) {
+    this.#set((list) => list.filter((todo) => todo.id !== id));
+  }
+
+  deleteAll(sectionId: number) {
+    this.#set((list) => list.filter((todo) => todo.section !== sectionId));
+  }
+
+  changeName(id: number, newName: string) {
+    if (newName.trim() === "") return;
+    this.#set((todo) => todo.id === id, "name", newName);
+  }
+}
 
 export interface SectionData {
   id: number;
   name: string;
 }
 
-const [sectionList, setSectionList] = createStore([
-  { id: 0, name: "Work" } as SectionData,
-]);
+class SectionList {
+  #list: SectionData[];
+  #set: SetStoreFunction<SectionData[]>;
+  #id: number = 0;
 
-const addTodo = (sectionId: number) => {
-  setTodoList((list) => [
-    ...list,
-    { id: ++todoId, name: "New", section: sectionId, done: false },
-  ]);
-};
+  constructor() {
+    [this.#list, this.#set] = createStore([
+      { id: 0, name: "Work" } as SectionData,
+    ]);
+  }
 
-const checkTodo = (id: number, checked: boolean) => {
-  setTodoList((todo) => todo.id === id, "done", checked);
-};
+  get() {
+    return this.#list;
+  }
 
-const deleteTodo = (id: number) => {
-  setTodoList((list) => list.filter((todo) => todo.id !== id));
-};
+  add() {
+    this.#set((list) => [
+      ...list,
+      { id: ++this.#id, name: `New Section ${this.#id}` },
+    ]);
+  }
 
-const changeTodoName = (id: number, name: string) => {
-  if (name.trim() === "") return;
-  setTodoList((todo) => todo.id === id, "name", name);
-};
+  delete(id: number) {
+    this.#set((list) => list.filter((section) => section.id !== id));
+  }
 
-const addSection = () => {
-  setSectionList((list) => [...list, { id: ++sectionId, name: "New Section" }]);
-};
-
-const deleteSection = (id: number) => {
-  setTodoList((list) => list.filter((todo) => todo.section !== id));
-  setSectionList((list) => list.filter((section) => section.id !== id));
-};
-
-const changeSectionName = (id: number, name: string) => {
-  if (name.trim() === "") return;
-  setSectionList((section) => section.id === id, "name", name);
-};
+  changeName(id: number, newName: string) {
+    if (newName.trim() === "") return;
+    this.#set((section) => section.id === id, "name", newName);
+  }
+}
 
 export const STORE = {
-  todoList,
-  setTodoList,
-  sectionList,
-  setSectionList,
-  addTodo,
-  checkTodo,
-  deleteTodo,
-  changeTodoName,
-  addSection,
-  deleteSection,
-  changeSectionName,
+  todoList: new TodoList(),
+  sectionList: new SectionList(),
 };

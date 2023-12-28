@@ -28,7 +28,7 @@ interface Props {
 
 export default function Section(props: Props) {
   const handleChangeName = (id: number, input: HTMLInputElement) => {
-    STORE.changeSectionName(id, input.value);
+    STORE.sectionList.changeName(id, input.value);
     // if empty string, rewrite existing name
     input.value = props.section.name;
     input.blur();
@@ -41,7 +41,14 @@ export default function Section(props: Props) {
           value={props.section.name}
           onchange={(e) => handleChangeName(props.section.id, e.target)}
         />
-        <button onclick={() => STORE.deleteSection(props.section.id)}>X</button>
+        <button
+          onclick={() => {
+            STORE.todoList.deleteAll(props.section.id);
+            STORE.sectionList.delete(props.section.id);
+          }}
+        >
+          X
+        </button>
       </div>
       <For each={props.todoList}>{(todo) => <Item todo={todo} />}</For>
       <AddButton sectionId={props.section.id} />
